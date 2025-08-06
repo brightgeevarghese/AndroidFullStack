@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myapp.core.network.ApiProvider
 import com.example.myapp.data.remote.dto.response.UserResponseDto
+import com.example.myapp.data.repository.UserRepositoryImpl
+import com.example.myapp.domain.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -19,7 +21,9 @@ import kotlinx.coroutines.launch
  *
  * The data is fetched asynchronously in [fetchUsers] using Kotlin coroutines.
  */
-class UserListViewModel: ViewModel() {
+class UserListViewModel(
+    private val userRepository: UserRepository = UserRepositoryImpl(ApiProvider.userApiService)
+): ViewModel() {
     // Backing property for users list
     private val _users = MutableStateFlow<List<UserResponseDto>>(emptyList())
     //Exposes a read-only flow of users that the UI can observe.
@@ -44,7 +48,8 @@ class UserListViewModel: ViewModel() {
         viewModelScope.launch {
             _isLoading.value = true
             try {
-                _users.value = ApiProvider.userApiService.getAllUsers()
+//                _users.value = ApiProvider.userApiService.getAllUsers()
+                _users.value = userRepository.getAllUsers()
             } catch (exception: Exception) {
                 _error.value = exception.localizedMessage
             } finally {
