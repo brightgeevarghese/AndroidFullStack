@@ -20,17 +20,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.myapp.core.di.AppContainer
+import com.example.myapp.core.di.AppDataContainer
 import com.example.myapp.data.remote.dto.response.UserResponseDto
 import com.example.myapp.presentation.viewmodel.UserListViewModel
 
 @Composable
-fun UserListScreen(viewModel: UserListViewModel = UserListViewModel()) {
+//fun UserListScreen(viewModel: UserListViewModel = UserListViewModel()) {
+fun UserListScreen(appContainer: AppContainer = AppDataContainer()) {
+    val viewModel by remember { mutableStateOf(UserListViewModel(appContainer.userRepository)) }
     // Observe the current state of users, error, and loading
     val users: List<UserResponseDto> by viewModel.users.collectAsState()
     val error: String? by viewModel.error.collectAsState()

@@ -2,7 +2,7 @@ package com.example.myapp.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.myapp.core.network.ApiProvider
+import com.example.myapp.core.network.NetworkModule
 import com.example.myapp.data.remote.dto.response.UserResponseDto
 import com.example.myapp.data.repository.UserRepositoryImpl
 import com.example.myapp.domain.repository.UserRepository
@@ -22,7 +22,8 @@ import kotlinx.coroutines.launch
  * The data is fetched asynchronously in [fetchUsers] using Kotlin coroutines.
  */
 class UserListViewModel(
-    private val userRepository: UserRepository = UserRepositoryImpl(ApiProvider.userApiService)
+    private val userRepository: UserRepository
+//    = UserRepositoryImpl(NetworkModule.userApiService)
 ): ViewModel() {
     // Backing property for users list
     private val _users = MutableStateFlow<List<UserResponseDto>>(emptyList())

@@ -4,10 +4,10 @@ import com.example.myapp.data.remote.api.UserApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object ApiProvider {
+object NetworkModule {//Provides all network-level dependencies (Retrofit, OkHttp, APIs)
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http://192.168.0.104:8080/api/v1/")
+            .baseUrl("http://192.168.0.102:8080/api/v1/")
 //            .baseUrl("http://10.0.2.2:8080/api/v1/")
             //Configures Retrofit to use Gson for JSON serialization/deserialization.
             // This converts JSON responses (e.g., from your User and Profile endpoints) into Kotlin data classes (e.g., UserDto, ProfileDto) and vice versa.
